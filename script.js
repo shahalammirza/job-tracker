@@ -142,7 +142,7 @@ mainContainer.addEventListener('click', function(event){
     //step 6 card delete logic
     else if(event.target.closest('.delete_btn')){
         const card = event.target.closest('.card_wrap');
-        const companyName = card.querySelector('.company_name');
+        const companyName = card.querySelector('.company_name').innerText;
 
         interviewList = interviewList.filter(item => item.companyName != companyName);
         rejectList = rejectList.filter(item => item.companyName != companyName);
@@ -237,25 +237,25 @@ function renderingReject(){
 
 // step 6 empty section function
 function checkEmptySection(){
-    if(currentStatus== 'all' || currentStatus == 'all-filter-btn'){
-        if(allCards.children.length == 0 ){
-            emptySection.classList.remove('hidden');
+    if(currentStatus === 'all' || currentStatus === 'all-filter-btn'){
+        if(allCards.children.length === 0){
+            emptySection.classList.remove('hidden')
         }else{
-            emptySection.classList.add('hidden');
+            emptySection.classList.add('hidden')
         }
     }
-    else if(currentStatus == 'interview-filter-btn'){
-        if(interviewList.length == 0 ){
-            emptySection.classList.remove('hidden');
+    else if(currentStatus === 'interview-filter-btn'){
+        if(interviewList.length === 0){
+            emptySection.classList.remove('hidden')
         }else{
-            emptySection.classList.add('hidden');
+            emptySection.classList.add('hidden')
         }
     }
-    else if(currentStatus == 'reject-filter-btn'){
-        if(rejectList.length == 0 ){
-            emptySection.classList.remove('hidden');
+    else if(currentStatus === 'reject-filter-btn'){
+        if(rejectList.length === 0){
+            emptySection.classList.remove('hidden')
         }else{
-            emptySection.classList.add('hidden');
+            emptySection.classList.add('hidden')
         }
     }
 }

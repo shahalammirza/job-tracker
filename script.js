@@ -9,6 +9,9 @@ let rejectCount = document.getElementById("reject-count");
 
 const allCards = document.getElementById("all_cards");
 
+// step 6 catch the empty section card
+const emptySection = document.getElementById('empty_section')
+
 // step 5
 const totJobCount = document.querySelector('.job_count');
 
@@ -28,6 +31,7 @@ function calculateCount(){
     else if(currentStatus == 'reject-filter-btn'){
         totJobCount.innerHTML = `${rejectList.length} of ${allCards_length} jobs`
     }
+    checkEmptySection();
 }
 calculateCount();
 
@@ -66,12 +70,13 @@ function filterStyleBtn(id){
     }
 
     calculateCount();
+    checkEmptySection();
 }
 
-console.log(interviewList)
 // step 3 catch the data form the main container
 const mainContainer = document.querySelector('main');
 mainContainer.addEventListener('click', function(event){
+    // for interview list
     if(event.target.classList.contains('interview_btn')){
         const parenNode = event.target.parentNode.parentNode;
         const companyName = parenNode.querySelector('.company_name').innerText;
@@ -102,6 +107,7 @@ mainContainer.addEventListener('click', function(event){
         }
         calculateCount();
     }
+    // for reject list
     else if(event.target.classList.contains('reject_btn')){
         const parenNode = event.target.parentNode.parentNode;
         const companyName = parenNode.querySelector('.company_name').innerText;
@@ -130,6 +136,17 @@ mainContainer.addEventListener('click', function(event){
         if(currentStatus === 'interview-filter-btn'){
            renderingInterview();
         }
+        calculateCount();
+    }
+
+    //step 6 card delete logic
+    else if(event.target.closest('.delete_btn')){
+        const card = event.target.closest('.card_wrap');
+        const companyName = card.querySelector('.company_name');
+
+        interviewList = interviewList.filter(item => item.companyName != companyName);
+        rejectList = rejectList.filter(item => item.companyName != companyName);
+        card.remove();
         calculateCount();
     }
 
@@ -215,4 +232,30 @@ function renderingReject(){
         filteredAllCards.appendChild(div);
     }
 
+}
+
+
+// step 6 empty section function
+function checkEmptySection(){
+    if(currentStatus== 'all' || currentStatus == 'all-filter-btn'){
+        if(allCards.children.length == 0 ){
+            emptySection.classList.remove('hidden');
+        }else{
+            emptySection.classList.add('hidden');
+        }
+    }
+    else if(currentStatus == 'interview-filter-btn'){
+        if(interviewList.length == 0 ){
+            emptySection.classList.remove('hidden');
+        }else{
+            emptySection.classList.add('hidden');
+        }
+    }
+    else if(currentStatus == 'reject-filter-btn'){
+        if(rejectList.length == 0 ){
+            emptySection.classList.remove('hidden');
+        }else{
+            emptySection.classList.add('hidden');
+        }
+    }
 }

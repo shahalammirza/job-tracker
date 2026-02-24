@@ -9,10 +9,25 @@ let rejectCount = document.getElementById("reject-count");
 
 const allCards = document.getElementById("all_cards");
 
+// step 5
+const totJobCount = document.querySelector('.job_count');
+
 function calculateCount(){
     totalCount.innerText = allCards.children.length;
     interviewCount.innerText = interviewList.length;
     rejectCount.innerText = rejectList.length;
+
+    // step 5 all jobs count for all tabs
+    const allCards_length = allCards.children.length;
+    if (currentStatus == 'all' || currentStatus == 'all-filter-btn'){
+        totJobCount.innerHTML = `${allCards_length} jobs`;
+    }
+    else if(currentStatus == 'interview-filter-btn'){
+        totJobCount.innerHTML = `${interviewList.length} of ${allCards_length} jobs`
+    }
+    else if(currentStatus == 'reject-filter-btn'){
+        totJobCount.innerHTML = `${rejectList.length} of ${allCards_length} jobs`
+    }
 }
 calculateCount();
 
@@ -128,23 +143,24 @@ const filteredAllCards = document.getElementById('filter_all_cards');
 function renderingInterview(){
     filteredAllCards.innerHTML = '';
 
-    for (let interview of interviewList){
+    for(let interview of interviewList ){
+
         const div = document.createElement('div');
         div.className = 'card_wrap bg-white p-[24px] border border-[#F1F2F4] rounded-[8px] mt-[16px] flex justify-between';
 
         div.innerHTML = `
-             <!-- card-left -->
+            <!-- card-left -->
             <div class="card_left">
                 <!-- step1 -->
-                <p class="company_name text-[18px] text-[#002C5C] font-semibold">Mobile First Corp</p>
+                <p class="company_name text-[18px] text-[#002C5C] font-semibold">${interview.companyName}</p>
                 <!-- step2 -->
-                <p class="position_name text-[16px] text-[#64748B]">React Native Developer</p>
+                <p class="position_name text-[16px] text-[#64748B]">${interview.positionName}</p>
                 <!-- step3 -->
-                <p class="jobType_salary text-[14px] text-[#64748B] mt-[20px]">Remote • Full-time • $130,000 - $175,000</p>
+                <p class="jobType_salary text-[14px] text-[#64748B] mt-[20px]">${interview.jobTypeSalary}</p>
                 <!-- step4 -->
-                <p class="status font-medium text-[14px] text-[#323B49] uppercase px-[12px] py-[8px] bg-[#EEF4FF] inline-block mt-[20px]">Not Applied</p>
+                <p class="status font-medium text-[14px] text-[#323B49] uppercase px-[12px] py-[8px] bg-[#EEF4FF] inline-block mt-[20px]">${interview.status}</p>
                 <!-- step5 -->
-                <p class="description text-[14px] text-[#323B49] mt-[8px]">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
+                <p class="description text-[14px] text-[#323B49] mt-[8px]">${interview.description}</p>
                 <!-- step6 -->
                 <div class="card_btn flex gap-[8px] mt-[20px]">
                     <button class="interview_btn text-[14px] font-bold uppercase px-[12px] py-[8px] rounded-[4px] border border-[#10B981] text-[#10B981] cursor-pointer">interview</button>
@@ -157,7 +173,7 @@ function renderingInterview(){
                 <button class="delete_btn h-[32px] w-[32px] border border-[#F1F2F4] rounded-full flex justify-center items-center cursor-pointer"><img src="img/del.png" alt=""></button>
             </div>
         `
-        filteredAllCards.appendChild(div)
+        filteredAllCards.appendChild(div);
     }
 
 }
@@ -166,23 +182,24 @@ function renderingInterview(){
 function renderingReject(){
     filteredAllCards.innerHTML = '';
 
-    for (let reject of rejectList){
+    for(let reject of rejectList ){
+
         const div = document.createElement('div');
         div.className = 'card_wrap bg-white p-[24px] border border-[#F1F2F4] rounded-[8px] mt-[16px] flex justify-between';
 
         div.innerHTML = `
-             <!-- card-left -->
+            <!-- card-left -->
             <div class="card_left">
                 <!-- step1 -->
-                <p class="company_name text-[18px] text-[#002C5C] font-semibold">Mobile First Corp</p>
+                <p class="company_name text-[18px] text-[#002C5C] font-semibold">${reject.companyName}</p>
                 <!-- step2 -->
-                <p class="position_name text-[16px] text-[#64748B]">React Native Developer</p>
+                <p class="position_name text-[16px] text-[#64748B]">${reject.positionName}</p>
                 <!-- step3 -->
-                <p class="jobType_salary text-[14px] text-[#64748B] mt-[20px]">Remote • Full-time • $130,000 - $175,000</p>
+                <p class="jobType_salary text-[14px] text-[#64748B] mt-[20px]">${reject.jobTypeSalary}</p>
                 <!-- step4 -->
-                <p class="status font-medium text-[14px] text-[#323B49] uppercase px-[12px] py-[8px] bg-[#EEF4FF] inline-block mt-[20px]">Not Applied</p>
+                <p class="status font-medium text-[14px] text-[#323B49] uppercase px-[12px] py-[8px] bg-[#EEF4FF] inline-block mt-[20px]">${reject.status}</p>
                 <!-- step5 -->
-                <p class="description text-[14px] text-[#323B49] mt-[8px]">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
+                <p class="description text-[14px] text-[#323B49] mt-[8px]">${reject.description}</p>
                 <!-- step6 -->
                 <div class="card_btn flex gap-[8px] mt-[20px]">
                     <button class="interview_btn text-[14px] font-bold uppercase px-[12px] py-[8px] rounded-[4px] border border-[#10B981] text-[#10B981] cursor-pointer">interview</button>
@@ -195,7 +212,7 @@ function renderingReject(){
                 <button class="delete_btn h-[32px] w-[32px] border border-[#F1F2F4] rounded-full flex justify-center items-center cursor-pointer"><img src="img/del.png" alt=""></button>
             </div>
         `
-        filteredAllCards.appendChild(div)
+        filteredAllCards.appendChild(div);
     }
 
 }
